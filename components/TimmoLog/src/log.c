@@ -45,7 +45,7 @@ void log_print(LogLevel level, const char *file, int line, const char *format, .
     va_start(args, format);
     printf("%s[%s](%s:%d):\t%s", log_level_colors[level], log_level_strings[level], file, line, ANSI_COLOR_RESET);
     vprintf(format, args);
-    printf("\n");
+    printf("\r\n");
     va_end(args);
     if (level == LOG_FATAL) {
         while(1);
