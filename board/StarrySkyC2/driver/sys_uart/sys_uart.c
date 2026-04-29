@@ -15,3 +15,11 @@ void hal_sys_putstr(char *str){
         hal_sys_putchar(*str++);
     }
 }
+
+uint8_t hal_sys_getchar(void){
+    int32_t c = -1;
+    while (c == -1) {
+        c = REG_UART_0_DATA;
+    }
+    return (uint8_t)c;
+}

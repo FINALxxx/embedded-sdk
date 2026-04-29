@@ -23,5 +23,11 @@ void hal_sys_putchar(char c);
  */
 void hal_sys_putstr(char *str);
 
+/**
+ * @brief 从系统串口接收一个字符
+ * 
+ * @return uint8_t 接收到的字符
+ */
+uint8_t hal_sys_getchar(void);
 #endif
 
