@@ -40,22 +40,22 @@ short shellWrite(char* str, unsigned short len){
 size_t getcwd(char* dir, size_t dirLen){
     char fullpath[256];
     snprintf(fullpath, sizeof(fullpath), "0:%s%s", dir, "");
-    printf("dir=%s\r\n",dir);
-    printf("full=%s\r\n",fullpath);
+    log_info("dir=%s\r\n",dir);
+    log_info("full=%s\r\n",fullpath);
 
     FRESULT res = f_getcwd(fullpath,sizeof(fullpath));
-    if (res != FR_OK) printf("f_getcwd failed: %d\r\n", res);
+    if (res != FR_OK) log_fatal("f_getcwd failed: %d\r\n", res);
     return res;
 }
 
 size_t chdir(char * dir){
     char fullpath[256];
     snprintf(fullpath, sizeof(fullpath), "0:%s%s", dir, "");
-    printf("dir=%s\r\n",dir);
-    printf("full=%s\r\n",fullpath);
+    log_info("dir=%s\r\n",dir);
+    log_info("full=%s\r\n",fullpath);
 
     FRESULT res = f_chdir(fullpath);
-    if (res != FR_OK) printf("f_chdir failed: %d\r\n", res);
+    if (res != FR_OK) log_fatal("f_chdir failed: %d\r\n", res);
     return res;
 }
 
@@ -78,12 +78,12 @@ size_t listdir(char *dir, char *buffer, size_t maxLen){
     // 1. 打开目录
     char fullpath[256];
     snprintf(fullpath, sizeof(fullpath), "0:%s%s", dir, "");
-    printf("dir=%s\r\n",dir);
-    printf("full=%s\r\n",fullpath);
+    log_info("dir=%s\r\n",dir);
+    log_info("full=%s\r\n",fullpath);
     res = f_opendir(&dir_obj, fullpath);
     if (res != FR_OK) {
         // 打开失败，写入错误信息
-        printf("f_opendir failed: %d\r\n", res);
+        log_fatal("f_opendir failed: %d\r\n", res);
         return strlen(buffer);
     }
     
@@ -140,13 +140,13 @@ size_t createfile(char *dir, char *filename){
     
     char fullpath[256];
     snprintf(fullpath, sizeof(fullpath), "0:%s%s", dir, filename);
-    printf("dir=%s\r\n",dir);
-    printf("full=%s\r\n",fullpath);
+    log_info("dir=%s\r\n",dir);
+    log_info("full=%s\r\n",fullpath);
     
     // 创建文件（如果存在则截断，不存在则新建）
     res = f_open(&file, fullpath, FA_CREATE_ALWAYS);
     if (res == FR_OK) f_close(&file);
-    else printf("f_open failed: %d\r\n", res);
+    else log_fatal("f_open failed: %d\r\n", res);
     
     return written;
 }

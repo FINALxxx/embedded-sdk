@@ -37,49 +37,17 @@ void log_init(LogLevel level, const char* filename) {
 void log_close(void) {
 }
 
-static void log_print(LogLevel level, const char *format, va_list args) {
+void log_print(LogLevel level, const char *file, int line, const char *format, ...) {
     if (level < g_log_level) {
         return;
     }
-    printf("%s[%s]:\t%s", log_level_colors[level], log_level_strings[level], ANSI_COLOR_RESET);
+    va_list args;
+    va_start(args, format);
+    printf("%s[%s](%s:%d):\t%s", log_level_colors[level], log_level_strings[level], file, line, ANSI_COLOR_RESET);
     vprintf(format, args);
     printf("\n");
+    va_end(args);
     if (level == LOG_FATAL) {
         while(1);
     }
-}
-
-void log_debug(const char *format, ...) {
-    va_list args;
-    va_start(args, format);
-    log_print(LOG_DEBUG, format, args);
-    va_end(args);
-}
-
-void log_info(const char *format, ...) {
-    va_list args;
-    va_start(args, format);
-    log_print(LOG_INFO, format, args);
-    va_end(args);
-}
-
-void log_warn(const char *format, ...) {
-    va_list args;
-    va_start(args, format);
-    log_print(LOG_WARN, format, args);
-    va_end(args);
-}
-
-void log_error(const char *format, ...) {
-    va_list args;
-    va_start(args, format);
-    log_print(LOG_ERROR, format, args);
-    va_end(args);
-}
-
-void log_fatal(const char *format, ...) {
-    va_list args;
-    va_start(args, format);
-    log_print(LOG_FATAL, format, args);
-    va_end(args);
 }
