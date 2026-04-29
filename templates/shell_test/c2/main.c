@@ -4,7 +4,6 @@ void main(){
     create_shell_env_varible();
 
     hal_sys_uart_init();
-    hal_hp_uart_init(115200);
 
     load_shell();
 

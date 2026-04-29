@@ -9,7 +9,7 @@ uint32_t envFunc;
 void __attribute__((optimize("O0"))) easy_print(uint32_t val){
     char buffer[128];
     snprintf(buffer, sizeof(buffer), "I will print: %d\r\n", val);
-    hal_hp_uart_putstr(buffer);
+    hal_sys_putstr(buffer);
 }
 
 void create_shell_env_varible(){
@@ -23,12 +23,15 @@ void create_shell_env_varible(){
 
 
 short shellRead(char* str, unsigned short len){
-    for(int i=0;i<len;i++) hal_hp_uart_recv(str+i);
-    return len;
+    unsigned short i = 0;
+    for (i = 0; i < len; i++) {
+        str[i] = (char)hal_sys_getchar();
+    }
+    return i;
 }
 
 short shellWrite(char* str, unsigned short len){
-    for(int i=0;i<len;i++) hal_hp_uart_send(str[i]);
+    for(int i=0;i<len;i++) hal_sys_putchar(str[i]);
     return len;
 }
 
