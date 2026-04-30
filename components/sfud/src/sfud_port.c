@@ -30,6 +30,7 @@
 #include <stdarg.h>
 #include "spi_software.h"
 #include "hal_timer.h"
+#include "log.h"
 
 static char log_buf[256];
 
@@ -46,7 +47,6 @@ static sfud_err spi_write_read(const sfud_spi *spi, const uint8_t *write_buf, si
 
     MYSPI_Start();
     for(uint32_t i = 0; i < read_size+write_size; i++){
-        // printf("Waiting(Write:%d,Read:%d,Sum:%d,cur:%d)\r\n",write_size,read_size,read_size+write_size,i);
         if (i < write_size) {
             send_data = *write_buf++;
         } else {
@@ -111,42 +111,4 @@ sfud_err sfud_spi_port_init(sfud_flash *flash) {
     flash->retry.times = 60 * 10000;
 
     return result;
-}
-
-/**
- * This function is print debug info.
- *
- * @param file the file which has call this function
- * @param line the line number which has call this function
- * @param format output format
- * @param ... args
- */
-void sfud_log_debug(const char *file, const long line, const char *format, ...) {
-    va_list args;
-
-    /* args point to the first variable parameter */
-    va_start(args, format);
-    printf("[SFUD](%s:%ld) ", file, line);
-    /* must use vprintf to print */
-    vprintf(format, args);
-    printf("\r\n");
-    va_end(args);
-}
-
-/**
- * This function is print routine info.
- *
- * @param format output format
- * @param ... args
- */
-void sfud_log_info(const char *format, ...) {
-    va_list args;
-
-    /* args point to the first variable parameter */
-    va_start(args, format);
-    printf("[SFUD]");
-    /* must use vprintf to print */
-    vprintf(format, args);
-    printf("\r\n");
-    va_end(args);
 }

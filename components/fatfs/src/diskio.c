@@ -26,7 +26,7 @@ DSTATUS disk_status (
 )
 {
 	DSTATUS status = STA_NOINIT;
-    printf("LogEnterStatus=%x\r\n",status);
+    log_debug("[FATFS]EnterStatus, waiting...\r\n");
 	switch (pdrv) {
         case DEV_FLASH:
             uint8_t flash_status_register = 0x00;
@@ -36,7 +36,7 @@ DSTATUS disk_status (
             
             break;
 	}
-    printf("LogExitStatus=%x\r\n",status);
+    log_debug("[FATFS]ExitStatus, return:%x\r\n",status);
 	return status;
 }
 
@@ -51,7 +51,7 @@ DSTATUS disk_initialize (
 )
 {
 	DSTATUS status = STA_NOINIT;
-    printf("LogEnterInit=%x\r\n",status);
+    log_debug("[FATFS]EnterInit, waiting...\r\n");
 
 	switch (pdrv) {
         case DEV_FLASH:
@@ -60,7 +60,7 @@ DSTATUS disk_initialize (
             else status = STA_NOINIT;
 		    break;
 	}
-    printf("LogExitInit=%x\r\n",status);
+    log_debug("[FATFS]ExitInit, return:%x\r\n",status);
 	return status;
 }
 
@@ -78,7 +78,7 @@ DRESULT disk_read (
 )
 {
 	DRESULT status = RES_PARERR;
-    printf("LogEnterRead=%x\r\n",status);
+    log_debug("[FATFS]EnterRead, waiting...\r\n");
     // sector += 512; // 2MB之后的第一块作为第一个扇区
     uint32_t addr = sector << 12;
     size_t size = count << 12;
@@ -90,7 +90,7 @@ DRESULT disk_read (
             else status = RES_ERROR;
 		    break;
 	}
-    printf("LogExitRead=%x\r\n",status);
+    log_debug("[FATFS]ExitRead, return:%x\r\n",status);
 	return status;
 }
 
@@ -110,7 +110,7 @@ DRESULT disk_write (
 )
 {
 	DRESULT status = RES_PARERR;
-    printf("LogEnterWrite=%x\r\n",status);
+    log_debug("[FATFS]EnterWrite, waiting...\r\n");
 
     uint32_t addr = sector << 12;
     size_t size = count << 12;
@@ -121,7 +121,7 @@ DRESULT disk_write (
             else status = RES_ERROR;
 		    break;
 	}
-    printf("LogExitWrite=%x\r\n",status);
+    log_debug("[FATFS]ExitWrite, return:%x\r\n",status);
 	return status;
 }
 

@@ -34,7 +34,7 @@ extern void shellClear(void);
 extern int shellExecute(int argc, char *argv[]);
 #endif
 
-SHELL_AGENCY_FUNC(shellRun, shellGetCurrent(), (const char *)p1);
+SHELL_AGENCY_FUNC(shellRun, shellGetCurrent(), (const char *)(uintptr_t)p1);
 
 
 /**

@@ -18,17 +18,17 @@ bool load_filesystem(){
 
     for(uint8_t i = 0; i<=3; i++){
         if(i==3){
-            printf("Exceed the maximum number of retries, exit :(\r\n");
+            log_fatal("Exceed the maximum number of retries, exit :(\r\n");
         }
 
         printf("Mounting FileSystem...\r\n");
         res_Flash = f_mount(&fs_Flash,"0:",1);
         if(res_Flash == FR_NO_FILESYSTEM){
-            printf("Do not find a FileSystem...\n");
+            log_error("Do not find a FileSystem...\n");
             printf("Make a new FileSystem...\n");
             res_Flash = f_mkfs("0:", &opt, work_buf, sizeof(work_buf));
             if(res_Flash == FR_MKFS_ABORTED){
-                printf("Fail in making a new FileSystem, abort.\r\n");
+                log_fatal("Fail in making a new FileSystem, abort.\r\n");
                 isMount = false;
                 break;
             }else{

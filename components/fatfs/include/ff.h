@@ -17,7 +17,7 @@
 / by use of this software.
 /
 /----------------------------------------------------------------------------*/
-
+#include "log.h"
 
 #ifndef FF_DEFINED
 #define FF_DEFINED	80386	/* Revision ID */

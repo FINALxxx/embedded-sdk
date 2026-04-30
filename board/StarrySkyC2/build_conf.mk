@@ -60,8 +60,8 @@ CFLAGS += -I$(ECOS_SDK_HOME)/components/libgcc/include
 endif
 
 ifdef CONFIG_COMPONENT_TIMMOLOG
-SRC_PATH += $(shell find $(ECOS_SDK_HOME)/components/TimmoLog -name "log.cpp")
-CFLAGS += -I$(ECOS_SDK_HOME)/components/TimmoLog
+SRC_PATH += $(shell find $(ECOS_SDK_HOME)/components/TimmoLog/src -name "*.[cS]")
+CFLAGS += -I$(ECOS_SDK_HOME)/components/TimmoLog/include
 endif
 
 ifdef CONFIG_COMPONENT_SPI_SOFTWARE

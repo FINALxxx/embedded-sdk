@@ -10,22 +10,19 @@ void load_shell(){
     ShellFs shellfs;
     Shell shell;
 
-    printf("Hello World From SysUart.\r\n");
-    hal_hp_uart_putstr("\r\n");
-
-
-    hal_hp_uart_putstr("Waiting for filesystem booting...\r\n");
+    printf("\r\n");
+    printf("Waiting for filesystem booting...\r\n");
 
     load_filesystem();
 
-    hal_hp_uart_putstr("Waiting for shell_fs booting...\r\n");  
+    printf("Waiting for shell_fs booting...\r\n");  
     shellfs.chdir = chdir;
     shellfs.getcwd = getcwd;
     shellfs.listdir = listdir;
     shellfs.createfile = createfile;
     shellFsInit(&shellfs, shellPathBuffer, 1024);
 
-    hal_hp_uart_putstr("Waiting for shell booting...\r\n");
+    printf("Waiting for shell booting...\r\n");
     shell.read = shellRead;
     shell.write = shellWrite;
     shellSetPath(&shell,shellPathBuffer);
@@ -34,9 +31,8 @@ void load_shell(){
 #else
     Shell shell;
 
-    printf("Hello World From SysUart.\r\n");
-    hal_hp_uart_putstr("\r\n");
-    hal_hp_uart_putstr("Waiting for shell booting...\r\n");
+    printf("\r\n");
+    printf("Waiting for shell booting...\r\n");
     shell.read = shellRead;
     shell.write = shellWrite;
     shellSetPath(&shell,shellPathBuffer);

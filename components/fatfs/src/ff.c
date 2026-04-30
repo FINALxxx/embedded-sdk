@@ -531,7 +531,7 @@ static WCHAR LfnBuf[FF_MAX_LFN + 1];		/* LFN working buffer */
     do {                                                                                        \
         FRESULT _res = (res);                                                                   \
         if (_res == FR_MKFS_ABORTED) {                                                          \
-            printf("FR_MKFS_ABORTED at %s:%d\n", __FILE__, __LINE__);                           \
+            log_error("FR_MKFS_ABORTED at %s:%d\n", __FILE__, __LINE__);                           \
         }                                                                                       \
         return _res;                                                                            \
     } while(0)

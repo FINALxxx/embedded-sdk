@@ -4,7 +4,6 @@
 #include <stdarg.h>
 #include <stddef.h>
 #include "hal_sys_uart.h"
-// #include "hal_hp_uart.h"
 
 #ifdef __cplusplus
 extern "C" {
