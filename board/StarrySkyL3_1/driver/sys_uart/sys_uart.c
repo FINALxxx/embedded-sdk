@@ -28,3 +28,10 @@ void hal_sys_putstr(char *str){
         hal_sys_putchar(*str++);
     }
 }
+
+uint8_t hal_sys_getchar(void){
+    // Wait until Data Ready (DR) bit (bit 0) of Line Status Register (LSR) is set
+    while ((REG_UART_0_LS & 0x01) == 0);
+    // Read and return the character from Receiver Buffer Register (RBR)
+    return REG_UART_0_RB;
+}
