@@ -17,7 +17,7 @@ void create_shell_env_varible(){
     envShort = 2026;
     strcpy(envString, "FINALx");
     envChar = 'Y';
-    envFunc = (uint32_t)easy_print;
+    envFunc = (uintptr_t)easy_print;
 }
 
 
