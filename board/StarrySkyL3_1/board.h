@@ -35,6 +35,13 @@
 #define REG_UART_0_LS                   (*((volatile uint8_t *)0x10000005))
 #define REG_UART_0_MS                   (*((volatile uint8_t *)0x10000006))
 
+/* ========================== UART 寄存器组 ================================ */
+#define REG_UART_1_LCR                  (*((volatile uint32_t*)0x10001000))  
+#define REG_UART_1_DIV                  (*((volatile uint32_t*)0x10001004))  
+#define REG_UART_1_TRX                  (*((volatile uint32_t*)0x10001008))  
+#define REG_UART_1_FCR                  (*((volatile uint32_t*)0x1000100c))  
+#define REG_UART_1_LSR                  (*((volatile uint32_t*)0x10001010))  
+
 /* ========================== QSPI 寄存器组 ================================ */
 #define REG_QSPI_0_STATUS               (*((volatile uint32_t *)0x10010000))
 #define REG_QSPI_0_CLKDIV               (*((volatile uint32_t *)0x10010004))
