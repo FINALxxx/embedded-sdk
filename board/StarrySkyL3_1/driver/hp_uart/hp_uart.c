@@ -44,8 +44,8 @@ void hal_hp_uart_recv(char *c){
 void hal_hp_uart_recv_str(char *str){
     while(1){
         hal_hp_uart_recv(str++);
-        if(*(str-1) == '\n'){
-            *str = 0;
+        if(*(str-1) == '\r' || *(str-1) == '\n'){
+            *str = '\0';
             break;
         }
     }
