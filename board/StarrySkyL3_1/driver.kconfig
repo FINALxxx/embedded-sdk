@@ -101,4 +101,8 @@ menu "External Devices"
     config DEVICE_PCF8563
         bool "PCF8563 RTC Support"
         default y
+
+    config DEVICE_ES01S_AT
+        bool "ESP01S AT Support"
+        default n
 endmenu

@@ -102,3 +102,6 @@ ifdef CONFIG_DEVICE_PCF8563
 SDK_SRC_PATH += $(shell find $(ECOS_SDK_HOME)/devices/pcf8563/src -name "*.c")
 endif
 
+ifdef CONFIG_DEVICE_ES01S_AT
+SDK_SRC_PATH += $(shell find $(ECOS_SDK_HOME)/devices/esp01s_at/src -name "*.c")
+endif
