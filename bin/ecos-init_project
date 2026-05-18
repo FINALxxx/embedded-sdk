@@ -136,9 +136,9 @@ init_project_isolated() {
     mkdir -p "$HardwareDir"
     mkdir -p "$SystemDir"
 
-    find "$SDK_ROOT/components/libc" -type f -regex '.*\.\(c\|h\|cpp\|hpp\)$' -exec cp {} "$LibraryDir" \;
-    find "$SDK_ROOT/components/libgcc" -type f -regex '.*\.\(c\|h\|cpp\|hpp\)$' -exec cp {} "$LibraryDir" \;
-    find "$SDK_ROOT/hal" -type f -regex '.*\.\(c\|h\|cpp\|hpp\)$' -exec cp {} "$LibraryDir" \;
+    find "$SDK_ROOT/components/libc" -type f -exec cp {} "$LibraryDir/" \;
+    find "$SDK_ROOT/components/libgcc" -type f -exec cp {} "$LibraryDir/" \;
+    find "$SDK_ROOT/hal" -type f -exec cp {} "$LibraryDir/" \;
     cp -r "$SDK_ROOT/components/spi_software" "$SystemDir"
     cp -r "$SDK_ROOT/components/sfud" "$SystemDir"
     cp -r "$SDK_ROOT/components/fatfs" "$SystemDir"
