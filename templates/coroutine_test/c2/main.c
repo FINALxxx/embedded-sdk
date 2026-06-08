@@ -7,9 +7,7 @@ task_t handlerC;
 
 
 void taskA(task_t* t){
-    LOCAL(
-        uint32_t unused[TASK_CTX_SIZE];
-    );
+    LOCAL();
 
     TASK_BEGIN(t);
     sigs = 0x00;
@@ -28,9 +26,7 @@ void taskA(task_t* t){
 }
 
 void taskB(task_t* t){
-    LOCAL(
-        uint32_t unused[TASK_CTX_SIZE];
-    );
+    LOCAL();
 
     TASK_BEGIN(t);
     sigs = 0x00;
@@ -52,7 +48,6 @@ void taskC(task_t* t){
     LOCAL(
         uint32_t a;
         uint32_t b;
-        uint32_t unused[TASK_CTX_SIZE-2];
     );
 
     TASK_BEGIN(t);

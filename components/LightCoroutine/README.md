@@ -71,8 +71,7 @@
     ```c
     void task(task_t* handler){
         LOCAL(
-            // 定义N个局部变量（自动初始化）
-            uint32_t unused[TASK_CTX_SIZE - N];
+            // 定义uint32_t类型的局部变量（自动初始化）
         );
         TASK_BEGIN(handler);
         // 编写任务函数
@@ -91,14 +90,19 @@
         LOCAL(
             uint32_t a;
             uint32_t b;
-            uint32_t unused[TASK_CTX_SIZE-2];
         );
         TASK_BEGIN(t);
         local.a = 1;
         local.b = 2;
-        printf(">>>step 1\n");
+        printf("step 1\n");
         TASK_YIELD(t);
-        printf("local.a = %d, local.b = %d\n", local.a, local.b);
+
+        printf("step2: local.a = %d, local.b = %d\n", local.a, local.b);
+        local.a = 3;
+        local.b = 4;
+        TASK_YIELD(t);
+        
+        printf("step2: local.a = %d, local.b = %d\n", local.a, local.b);
         printf(">>>done\n");
         TASK_END(t);
     }

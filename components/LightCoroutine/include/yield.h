@@ -6,12 +6,16 @@
 #define CONCAT(a, b) a##b
 #define LABEL(line) CONCAT(L, line)
 
-#define TASK_END(t)  (t)->resume_point = NULL
+#define TASK_END(t)                                    \
+    do{                                                \
+        (t)->resume_point = NULL;                      \
+        delete_task(t);                                \
+    }while(0);                                         \
 
 #ifdef USE_CTX
 #define TASK_BEGIN(t)                                  \
     do{                                                \
-        enter_load_from_ctx(t, (uint32_t*)&local);                \
+        enter_load_from_ctx(t, (uint32_t*)&local, sizeof(local));                \
         resume_task(t);                                \
         if((t)->resume_point) goto *(t)->resume_point; \
         ctx_init(t);                                   \
@@ -19,7 +23,7 @@
 
 #define TASK_YIELD_INNER(t, label)          \
     do{                                     \
-        exit_save_to_ctx(t, (uint32_t*)&local);        \
+        exit_save_to_ctx(t, (uint32_t*)&local, sizeof(local));        \
         (t)->resume_point = &&label;        \
         return;                             \
         label: ;                            \
@@ -31,7 +35,7 @@
         (t)->resume_point = &&label;        \
         label: ;                            \
         if(!(cond)){                        \
-            exit_save_to_ctx(t, (uint32_t*)&local);    \
+            exit_save_to_ctx(t, (uint32_t*)&local, sizeof(local));    \
             suspend_task(t);                \
             return;                         \
         }                                   \

@@ -14,7 +14,6 @@ typedef struct task_t{
     void *args;
 #ifdef USE_CTX
     uint32_t ctx[TASK_CTX_SIZE]; // stk
-    // uint32_t ctx_top; // msp
 #endif
 } task_t;
 

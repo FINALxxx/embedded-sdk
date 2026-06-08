@@ -7,12 +7,12 @@ void ctx_init(task_t *task_handler){
     // task_handler->ctx_top = TASK_CTX_SIZE - 1;
 }
 
-void enter_load_from_ctx(task_t *task_handler, uint32_t *local_variable_structure){
-    memcpy(local_variable_structure, task_handler->ctx, sizeof(task_handler->ctx));
+void enter_load_from_ctx(task_t *task_handler, uint32_t *local_variable_structure, uint32_t size){
+    memcpy(local_variable_structure, task_handler->ctx, size);
 }
 
-void exit_save_to_ctx(task_t *task_handler, uint32_t *local_variable_structure){
-    memcpy(task_handler->ctx, local_variable_structure, sizeof(task_handler->ctx));
+void exit_save_to_ctx(task_t *task_handler, uint32_t *local_variable_structure, uint32_t size){
+    memcpy(task_handler->ctx, local_variable_structure, size);
 }
 
 // void ctx_push(task_t *task_handler, uint32_t val){
