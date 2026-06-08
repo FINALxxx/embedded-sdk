@@ -1,0 +1,12 @@
+#ifndef CONTEXT_H
+#define CONTEXT_H
+
+#ifdef USE_CTX
+#include "coroutine.h"
+
+void ctx_init(task_t *task_handler);
+void enter_load_from_ctx(task_t *task_handler, uint32_t *local_variable_structure);
+void exit_save_to_ctx(task_t *task_handler, uint32_t *local_variable_structure);
+#endif
+
+#endif
