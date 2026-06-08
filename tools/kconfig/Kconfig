@@ -47,6 +47,12 @@ menu "Build Configuration"
             default n
             help
               Enable Shell(run slowly when using software-spi)
+
+        config COMPONENT_COROUTINE
+            bool "LightCouroutine Support"
+            default n
+            help
+              Enable Coroutine
     endmenu
 
     choice
