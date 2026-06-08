@@ -40,8 +40,10 @@ echo_available_templates() {
     echo "| timer            |    |    |    | √    |"
     echo "| wdg              |    |    |    | √    |"
     echo "| wdg              |    |    |    | √    |"
+    echo "| spi_flash_test   |    | √  |    |      |"
     echo "| filesystem_test  |    | √  |    |      |"
     echo "| shell_test       |    | √  |    |      |"
+    echo "| coroutine_test   |    | √  |    |      |"
     echo "|------------------|----|----|----|------|"
     echo "  * means supported but code is in root dir instead of board specific dir"
 }
