@@ -1,6 +1,8 @@
 #ifndef CONTEXT_H
 #define CONTEXT_H
 
+#include "conf.h"
+
 #ifdef USE_CTX
 #include "coroutine.h"
 
