@@ -30,17 +30,18 @@
     } while(0)
 #define TASK_YIELD(t) TASK_YIELD_INNER(t, LABEL(__LINE__))
 
-#define TASK_WAIT_INNER(t, label, cond)     \
+#define TASK_WAIT_INNER(t, label, cond, ...)     \
     do{                                     \
         (t)->resume_point = &&label;        \
         label: ;                            \
+        __VA_ARGS__                         \
         if(!(cond)){                        \
             exit_save_to_ctx(t, (uint32_t*)&local, sizeof(local));    \
             suspend_task(t);                \
             return;                         \
         }                                   \
     }while(0)
-#define TASK_WAIT(t, cond) TASK_WAIT_INNER(t, LABEL(__LINE__), cond)
+#define TASK_WAIT(t, cond, ...) TASK_WAIT_INNER(t, LABEL(__LINE__), cond, __VA_ARGS__)
 
 #define LOCAL(...)                  \
     struct { __VA_ARGS__ } local;   \
