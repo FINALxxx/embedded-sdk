@@ -48,11 +48,42 @@ menu "Build Configuration"
             help
               Enable Shell(run slowly when using software-spi)
 
-        config COMPONENT_COROUTINE
-            bool "LightCouroutine Support"
-            default n
-            help
-              Enable Coroutine
+        menu "LightCouroutine Support"
+            config COMPONENT_COROUTINE
+                bool "LightCouroutine Support"
+                default n
+                help
+                  Enable Coroutine
+        
+            config COMPONENT_COROUTINE_USE_IDLE_TASK
+                bool "USE_IDLE_TASK"
+                default y
+                depends on COMPONENT_COROUTINE
+                help
+                  Enable Coroutine idle task
+
+            config COMPONENT_COROUTINE_MAX_TASK_NUM
+                int "MAX_TASK_NUM"
+                default 10
+                depends on COMPONENT_COROUTINE
+                help
+                  Set maximum Coroutine task number(without idle task)
+
+            config COMPONENT_COROUTINE_USE_CTX
+                bool "USE_CTX"
+                default y
+                depends on COMPONENT_COROUTINE
+                help
+                  Enable Coroutine context stack
+
+            config COMPONENT_COROUTINE_TASK_CTX_SIZE
+                int "TASK_CTX_SIZE"
+                default 64
+                depends on COMPONENT_COROUTINE && COMPONENT_COROUTINE_USE_CTX
+                help
+                  Set Coroutine context stack item number(each item size is 4B)
+
+        endmenu
     endmenu
 
     choice
