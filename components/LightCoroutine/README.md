@@ -39,8 +39,18 @@
 - 任务函数语法
     - TASK_BEGIN(handler)：运行到此处时，会自动跳转到上次退出的位置
     - TASK_END(handler)：运行到此处时，会结束掉任务
+
     - TASK_YIELD(handler)：运行到此处时，会退出函数（立即让出CPU），下次进入时将从下一条指令执行
-    - TASK_WAIT(handler, cond)：运行到此处时，若cond成立，将从下一条指令执行；若cond不成立，将会退出函数（立即让出CPU），下次进入时再次判断cond
+    - TASK_YIELD_DETAILED(t, {post_true})：同上，但在退出之前会执行post_true内的语句
+    
+    - TASK_WAIT(handler, (cond))：
+        - 运行到此处时，若cond成立，将从下一条指令执行；
+        - 若cond不成立，将会退出函数（立即让出CPU），下次进入时再次判断cond
+    - TASK_WAIT_DETAILED(t, {pre}, (cond), {post_false}, {post_true})：
+        - 同上
+        - 在判断cond之前先执行一次pre
+        - 在cond成立、执行下一条指令之前先执行一次post_true
+        - 在cond不成立、退出之前执行post_false
 - 示例
     ```c
     uint32_t sig = 0x0;
@@ -81,11 +91,19 @@
 - 任务函数语法
     - TASK_BEGIN(handler)：运行到此处时，将会导入局部变量栈，然后自动跳转到上次退出的位置
     - TASK_END(handler)：运行到此处时，会结束掉任务
+    
     - TASK_YIELD(handler)：运行到此处时，会退出函数（立即让出CPU）、导出局部变量栈，下次进入时将从下一条指令执行
-    - TASK_WAIT(handler, (cond), {exec})：
-        - 运行到此处时，若cond成立，将从下一条指令执行；若cond不成立，将会退出函数（立即让出CPU）、导出局部变量栈，下次进入时再次判断cond
-        - 每次进行判断之前，会执行{exec}内的所有语句，再进行判断
-        - cond中的条件可以使用exec内临时定义的变量
+    - TASK_YIELD_DETAILED(t, {post_true})：同上，但在退出之前会执行post_true内的语句
+    
+    - TASK_WAIT(handler, (cond))：
+        - 运行到此处时，若cond成立，将从下一条指令执行；
+        - 若cond不成立，将会退出函数（立即让出CPU）、导出局部变量栈，下次进入时再次判断cond
+    - TASK_WAIT_DETAILED(t, {pre}, (cond), {post_false}, {post_true})：
+        - 同上
+        - 在判断cond之前先执行一次pre
+        - 在cond成立、执行下一条指令之前先执行一次post_true
+        - 在cond不成立、退出之前执行post_false
+    
     - LOCAL(...)：必须存在，且在函数开头使用该语法，用于声明使用和未使用的局部变量
 - 示例
     ```c

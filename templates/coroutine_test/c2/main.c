@@ -54,12 +54,26 @@ void taskC(task_t* t){ // Consumer
     uint32_t newConsumeCnt = 0;
     uint32_t newProduceCnt = 0;
     while(1){
-        TASK_WAIT(t, (newConsumeCnt + newProduceCnt > 10), {
-            newConsumeCnt = consumeCnt - local.lastConsumeCnt;
-            newProduceCnt = produceCnt - local.lastProduceCnt;
-        });
-        local.lastConsumeCnt = consumeCnt;
-        local.lastProduceCnt = produceCnt;
+        TASK_WAIT_DETAILED(t, 
+            {
+                // the statement at the pre-jugdement
+                newConsumeCnt = consumeCnt - local.lastConsumeCnt;
+                newProduceCnt = produceCnt - local.lastProduceCnt;
+            },
+            (
+                // the condition in the judgement
+                newConsumeCnt + newProduceCnt > 10
+            ),
+            {
+                // the statement at the post-judgement when JUDGEMENT IS FALSE
+            },
+            {
+                // the statement at the post-judgement when JUDGEMENT IS TRUE
+                local.lastConsumeCnt = consumeCnt;
+                local.lastProduceCnt = produceCnt;
+            }
+        );
+        
         printf("C: newConsumeCnt + newProduceCnt > 10, stop?(Y/n)\r\n");
         if(hal_sys_getchar() == 'Y'){
             delete_task(&handlerA);
