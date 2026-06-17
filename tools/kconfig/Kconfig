@@ -30,14 +30,14 @@ menu "Build Configuration"
 
         config COMPONENT_SFUD
             bool "Serial Flash Universal Driver Support"
-            depends on COMPONENT_SPI_SOFTWARE
+            depends on DRIVER_QSPI
             default n
             help
               Enable SFUD to drive various flash devices
 
         config COMPONENT_FLASH_FS
             bool "FileSystem Support"
-            depends on COMPONENT_SPI_SOFTWARE && COMPONENT_SFUD
+            depends on COMPONENT_SFUD
             default n
             help
               Enable FileSystem with FAT16 in flash by using fatfs
