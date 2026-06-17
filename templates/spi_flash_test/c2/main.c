@@ -1,5 +1,5 @@
 #include "main.h"
-#include "sfud/inc/sfud.h"
+#include "sfud.h"
 
 #define SFUD_DEMO_TEST_BUFFER_SIZE                     1024
 
