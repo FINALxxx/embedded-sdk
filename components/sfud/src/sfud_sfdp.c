@@ -82,6 +82,7 @@ bool sfud_read_sfdp(sfud_flash *flash) {
 
     /* JEDEC basic flash parameter header */
     sfdp_para_header basic_header;
+    // printf("LOG=%x,%x\r\n",read_sfdp_header(flash),read_basic_header(flash, &basic_header));
     if (read_sfdp_header(flash) && read_basic_header(flash, &basic_header)) {
         return read_basic_table(flash, &basic_header);
     } else {
@@ -223,7 +224,7 @@ static bool read_basic_table(sfud_flash *flash, sfdp_para_header *basic_header) 
         return false;
     }
     /* get write granularity */
-    //TODO 目前为 1.0 所提供的方式，后期支持 V1.5 及以上的方式读取 page size
+    //TODO 目前为 1.0 锟斤拷锟结供锟侥凤拷式锟斤拷锟斤拷锟斤拷支锟斤拷 V1.5 锟斤拷锟斤拷锟较的凤拷式锟斤拷取 page size
     switch ((table[0] & (0x01 << 2)) >> 2) {
     case 0:
         sfdp->write_gran = 1;
