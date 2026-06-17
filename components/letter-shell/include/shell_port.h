@@ -14,6 +14,14 @@ extern char envString[128];
 extern char envChar;
 extern uint32_t envFunc;
 
+typedef struct func_node{
+    void (*func)(void *);
+    void* param;
+    struct func_node *next;
+} func_node;
+
+void set_fnode(func_node* new_fnode);
+
 void create_shell_env_varible();
 
 short shellRead(char* str, unsigned short len);

@@ -6,10 +6,23 @@ char envString[128];
 char envChar;
 uint32_t envFunc;
 
-void __attribute__((optimize("O0"))) easy_print(uint32_t val){
-    char buffer[128];
-    snprintf(buffer, sizeof(buffer), "I will print: %d\r\n", val);
-    hal_sys_putstr(buffer);
+
+func_node* fnode;
+void set_fnode(func_node* new_fnode){
+    fnode = new_fnode;
+}
+
+void __attribute__((optimize("O0"))) exec_func(uint32_t st, uint32_t ed, uint32_t loopTime){
+    while(loopTime--){
+        uint32_t cnt = 0;
+        for(func_node* it = fnode; it!=NULL; it=it->next){
+            if(cnt<st) continue;
+            if(cnt>st) break;
+
+            it->func(it->param);
+            cnt++;
+        }
+    }
 }
 
 void create_shell_env_varible(){
@@ -17,9 +30,8 @@ void create_shell_env_varible(){
     envShort = 2026;
     strcpy(envString, "FINALx");
     envChar = 'Y';
-    envFunc = (uintptr_t)easy_print;
+    envFunc = (uintptr_t)exec_func;
 }
-
 
 
 short shellRead(char* str, unsigned short len){

@@ -30,14 +30,14 @@ menu "Build Configuration"
 
         config COMPONENT_SFUD
             bool "Serial Flash Universal Driver Support"
-            depends on COMPONENT_SPI_SOFTWARE
+            depends on DRIVER_QSPI
             default n
             help
               Enable SFUD to drive various flash devices
 
         config COMPONENT_FLASH_FS
             bool "FileSystem Support"
-            depends on COMPONENT_SPI_SOFTWARE && COMPONENT_SFUD
+            depends on COMPONENT_SFUD
             default n
             help
               Enable FileSystem with FAT16 in flash by using fatfs
@@ -47,6 +47,43 @@ menu "Build Configuration"
             default n
             help
               Enable Shell(run slowly when using software-spi)
+
+        menu "LightCouroutine Support"
+            config COMPONENT_COROUTINE
+                bool "LightCouroutine Support"
+                default n
+                help
+                  Enable Coroutine
+        
+            config COMPONENT_COROUTINE_USE_IDLE_TASK
+                bool "USE_IDLE_TASK"
+                default y
+                depends on COMPONENT_COROUTINE
+                help
+                  Enable Coroutine idle task
+
+            config COMPONENT_COROUTINE_MAX_TASK_NUM
+                int "MAX_TASK_NUM"
+                default 10
+                depends on COMPONENT_COROUTINE
+                help
+                  Set maximum Coroutine task number(without idle task)
+
+            config COMPONENT_COROUTINE_USE_CTX
+                bool "USE_CTX"
+                default y
+                depends on COMPONENT_COROUTINE
+                help
+                  Enable Coroutine context stack
+
+            config COMPONENT_COROUTINE_TASK_CTX_SIZE
+                int "TASK_CTX_SIZE"
+                default 64
+                depends on COMPONENT_COROUTINE && COMPONENT_COROUTINE_USE_CTX
+                help
+                  Set Coroutine context stack item number(each item size is 4B)
+
+        endmenu
     endmenu
 
     choice

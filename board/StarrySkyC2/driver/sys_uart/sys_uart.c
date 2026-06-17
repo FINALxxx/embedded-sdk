@@ -3,7 +3,7 @@
 #include "board.h"
 
 void hal_sys_uart_init(void){
-    REG_UART_0_CLKDIV =  (uint32_t)(CONFIG_CPU_FREQ_MHZ * 1000000 / CONFIG_UART_BAUD_RATE);
+    REG_UART_0_CLKDIV =  (uint32_t)(CONFIG_CPU_FREQ_MHZ * 1000000 / CONFIG_UART_BAUD_RATE - 1);
 }
 
 void hal_sys_putchar(char c){

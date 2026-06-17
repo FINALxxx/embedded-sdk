@@ -408,7 +408,6 @@ sfud_err sfud_read(const sfud_flash *flash, uint32_t addr, size_t size, uint8_t 
     if (spi->lock) {
         spi->lock(spi);
     }
-
     result = wait_busy(flash);
 
     if (result == SFUD_SUCCESS) {
@@ -421,7 +420,7 @@ sfud_err sfud_read(const sfud_flash *flash, uint32_t addr, size_t size, uint8_t 
             cmd_data[0] = SFUD_CMD_READ_DATA;
             make_adress_byte_array(flash, addr, &cmd_data[1]);
             cmd_size = flash->addr_in_4_byte ? 5 : 4;
-            result = spi->wr(spi, cmd_data, cmd_size, data, size); 
+            result = spi->wr(spi, cmd_data, cmd_size, data, size);
         }
     }
     /* unlock SPI */
