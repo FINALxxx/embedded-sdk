@@ -56,23 +56,23 @@ uint8_t hal_delay_s(uint8_t timer_id, uint32_t val){
 }
 
 uint8_t hal_sys_tick_init(uint8_t timer_id){
-    if (timer_id == 0){
-        REG_TIMER_0_CTRL = 0;
-        while (REG_TIMER_0_STAT == 1)
-            ; // clear irq
-        REG_TIMER_0_PSCR = CONFIG_TIMER_FREQ_MHZ - 1;
-        REG_TIMER_0_CMP = 0xFFFFFFFF;
-        REG_TIMER_0_CTRL = 0xD; // enable timer
-        return 0;
-    }else{
+    // if (timer_id == 0){
+    //     REG_TIMER_0_CTRL = 0;
+    //     while (REG_TIMER_0_STAT == 1)
+    //         ; // clear irq
+    //     REG_TIMER_0_PSCR = CONFIG_TIMER_FREQ_MHZ - 1;
+    //     REG_TIMER_0_CMP = 0xFFFFFFFF;
+    //     REG_TIMER_0_CTRL = 0xD; // enable timer
+    //     return 0;
+    // }else{
         return 1;
-    }
+    // }
 }
 
 uint32_t hal_get_sys_tick(uint8_t timer_id){
-    if (timer_id == 0){
-        return REG_TIMER_0_CNT;
-    }else{
+    // if (timer_id == 0){
+    //     return REG_TIMER_0_CNT;
+    // }else{
         return 0;
-    }
+    // }
 }
