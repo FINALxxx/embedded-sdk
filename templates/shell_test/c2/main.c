@@ -5,6 +5,8 @@ void easy_print(void* param){
 }
 
 void main(){
+    log_init(LOG_WARN, NULL);
+    
     hal_sys_uart_init();
 
     func_node func_node = {
