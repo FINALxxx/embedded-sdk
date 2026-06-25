@@ -16,18 +16,20 @@
 COLOR_RED := $(shell echo "\033[1;31m")
 COLOR_END := $(shell echo "\033[0m")
 
-
-ifeq ($(wildcard configs/.config),)
-$(warning $(COLOR_RED)Warning: configs/.config does not exist!$(COLOR_END))
-$(warning $(COLOR_RED)To build the project, first run 'make menuconfig'.$(COLOR_END))
-endif
-
 Q            := @
 KCONFIG_PATH := $(ECOS_SDK_HOME)/tools/kconfig
 FIXDEP_PATH  := $(ECOS_SDK_HOME)/tools/fixdep
 Kconfig      := $(ECOS_SDK_HOME)/tools/kconfig/Kconfig
 rm-distclean += configs/generated configs/config configs/.config configs/.config.old
 silent := -s
+CONFIG_TARGETS := menuconfig alldefconfig defconfig savedefconfig %defconfig clean_config clean_all distclean help
+
+ifeq ($(wildcard configs/.config),)
+ifeq ($(filter $(CONFIG_TARGETS),$(MAKECMDGOALS)),)
+$(warning $(COLOR_RED)Warning: configs/.config does not exist!$(COLOR_END))
+$(warning $(COLOR_RED)To build the project, first run 'make menuconfig', 'make alldefconfig', or 'make defconfig'.$(COLOR_END))
+endif
+endif
 
 CONF   := $(KCONFIG_PATH)/build/conf
 MCONF  := $(KCONFIG_PATH)/build/mconf
@@ -53,25 +55,42 @@ $(MCONF):
 $(FIXDEP):
 	$(Q)$(MAKE) $(silent) -C $(FIXDEP_PATH)
 
-menuconfig: $(MCONF) $(CONF) $(FIXDEP)
-	$(Q)$(MCONF) $(Kconfig)
-	$(Q)$(CONF) $(silent) --syncconfig $(Kconfig)
+define sync_kconfig_output
+	@mkdir -p configs
 	@cp -r include/generated configs/
 	@cp -r include/config configs/
 	@rm -rf $(PROJECT_PATH)/include
+endef
+
+menuconfig: $(MCONF) $(CONF) $(FIXDEP)
+	$(Q)$(MCONF) $(Kconfig)
+	$(Q)$(CONF) $(silent) --syncconfig $(Kconfig)
+	$(call sync_kconfig_output)
+
+alldefconfig: $(CONF) $(FIXDEP)
+	$(Q)$< $(silent) --alldefconfig $(Kconfig)
+	$(Q)$< $(silent) --syncconfig $(Kconfig)
+	$(call sync_kconfig_output)
 
 savedefconfig: $(CONF)
 	$(Q)$< $(silent) --$@=configs/defconfig $(Kconfig)
 
+defconfig: $(CONF) $(FIXDEP)
+	$(Q)$< $(silent) --defconfig=configs/defconfig $(Kconfig)
+	$(Q)$< $(silent) --syncconfig $(Kconfig)
+	$(call sync_kconfig_output)
+
 %defconfig: $(CONF) $(FIXDEP)
 	$(Q)$< $(silent) --defconfig=configs/$@ $(Kconfig)
 	$(Q)$< $(silent) --syncconfig $(Kconfig)
+	$(call sync_kconfig_output)
 
-.PHONY: menuconfig savedefconfig defconfig
+.PHONY: menuconfig alldefconfig savedefconfig defconfig
 
 # Help text used by make help
 help:
 	@echo  '  menuconfig	  - Update current config utilising a menu based program'
+	@echo  '  alldefconfig   - Generate default config non-interactively'
 	@echo  '  savedefconfig   - Save current config as configs/defconfig (minimal config)'
 
 distclean: clean
