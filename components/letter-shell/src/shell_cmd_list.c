@@ -12,8 +12,15 @@
 #include "shell.h"
 #include "shell_fs.h"
 #include "shell_port.h"
+
+#ifdef COMPONENT_FILE_EDITOR
 #include "text_editor.h"
+#endif
+
+#ifdef COMPONENT_C_COMPILER
 #include "fcc.h"
+#endif
+
 
 #if SHELL_USING_CMD_EXPORT != 1
 
@@ -141,15 +148,20 @@ const ShellCommand shellCommandList[] =
                     shellTOUCH,
                     create a new file),
 
+#ifdef CONFIG_COMPONENT_FILE_EDITOR
     SHELL_CMD_ITEM(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_MAIN)|SHELL_CMD_DISABLE_RETURN,
                     edit,
                     editCmd,
                     edit file\r\nedit <filename>),
+#endif
 
+#ifdef CONFIG_COMPONENT_C_COMPILER
     SHELL_CMD_ITEM(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_MAIN)|SHELL_CMD_DISABLE_RETURN,
                     fcc,
                     fccCmd,
                     compile C source\r\nfcc <source.c>),
+#endif
+
 #endif
 
     SHELL_CMD_ITEM(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC)|SHELL_CMD_DISABLE_RETURN,

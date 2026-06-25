@@ -10,7 +10,17 @@ func_node flist[16];
 
 
 void __attribute__((optimize("O0"))) exec_func(uint8_t id, uint32_t param, uint8_t use_default_param){
-    assert(id >= 0 && id <= 15,"The fnode id must between 0 and 15.");
+    if(!(id >= 0 && id <= 15)){
+        log_error("The fnode id must between 0 and 15.");
+        return;
+    }
+
+    if(flist[id].func == NULL){
+        log_error("The function is NULL.");
+        return;
+    }
+    
+
     if(use_default_param) flist[id].func(flist[id].default_param);
     else flist[id].func((void*)param);
 }
